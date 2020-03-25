@@ -1,3 +1,4 @@
+require_relative 'journey'
 
 class Oystercard
   STARTING_BALANCE = 0
