@@ -27,7 +27,7 @@ describe Oystercard do
   end
 
   context 'testing max and min limits of card' do
-   
+
     it 'card has maximum balance and raises error if exceeded' do
       subject.topup(Oystercard::MAXIMUM_BALANCE)
       expect { subject.topup(1) }.to raise_error "Maximum balance £#{Oystercard::MAXIMUM_BALANCE}"
@@ -36,7 +36,7 @@ describe Oystercard do
     it 'will raise an error if there is not enough balance on the card' do
       expect { subject.touch_in(origin) }.to raise_error "Below minimum balance of £#{Oystercard::MINIMUM_BALANCE}"
     end
-    
+
   end
 
   it 'when user touches in captures station of origin' do
@@ -61,7 +61,7 @@ describe Oystercard do
       before do
         subject.topup(10)
         subject.touch_in(origin)
-      end 
+      end
 
         it 'it checks if the card in use after user touched in' do
           expect(subject).to be_in_journey
@@ -73,9 +73,16 @@ describe Oystercard do
         it 'when use touches out, the correct amount is deducted from the balance' do
           expect { subject.touch_out }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
         end
-
+    context 'after touching in' do
+      before do
+        subject.topup(10)
+        subject.touch_in(origin)
+      end
+      it "should wipe station you entered in upon touching out" do
+        expect { subject.touch_out }.to change { subject.entry_station }.from(origin).to(nil)
+      end
+    end
 
     end
-  end 
+  end
 end
-
