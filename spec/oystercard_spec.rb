@@ -2,7 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
 
-  let (:origin) { double :station }
+#  let (:"text string") { double :station }
 
   context '#balance' do
     it 'responds to #balance' do
@@ -34,14 +34,14 @@ describe Oystercard do
     end
 
     it 'will raise an error if there is not enough balance on the card' do
-      expect { subject.touch_in(origin) }.to raise_error "Below minimum balance of £#{Oystercard::MINIMUM_BALANCE}"
+      expect { subject.touch_in("text string") }.to raise_error "Below minimum balance of £#{Oystercard::MINIMUM_BALANCE}"
     end
 
   end
 
-  it 'when user touches in captures station of origin' do
+  it 'when user touches in captures station of "text string"' do
     subject.topup(10)
-    expect { subject.touch_in(origin) }.to change { subject.entry_station }.from(nil).to(origin)
+    expect { subject.touch_in("text string") }.to change { subject.entry_station }.from(nil).to("text string")
   end
 
 
@@ -50,7 +50,7 @@ describe Oystercard do
       expect(subject).to respond_to(:touch_in).with(1).argument
     end
     it 'responds to touch_out' do
-      expect(subject).to respond_to :touch_out
+      expect(subject).to respond_to(:touch_out).with(1).argument
     end
 
     it 'responds to in_journey?' do
@@ -58,31 +58,46 @@ describe Oystercard do
     end
 
     context 'adds 10 to balance and touches in' do
+
       before do
         subject.topup(10)
-        subject.touch_in(origin)
+        subject.touch_in("text string")
       end
 
         it 'it checks if the card in use after user touched in' do
           expect(subject).to be_in_journey
         end
         it 'it checks if the card not in use after user touched out' do
-          subject.touch_out
+          subject.touch_out('buh')
           expect(subject).not_to be_in_journey
         end
         it 'when use touches out, the correct amount is deducted from the balance' do
-          expect { subject.touch_out }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
+          expect { subject.touch_out('buh') }.to change { subject.balance }.by -(Oystercard::MINIMUM_FARE)
         end
-    context 'after touching in' do
-      before do
-        subject.topup(10)
-        subject.touch_in(origin)
+        it " should record your travel history" do
+          subject.touch_out('buh')
+          expect(subject.history.length).to eq(1)
+        end
       end
-      it "should wipe station you entered in upon touching out" do
-        expect { subject.touch_out }.to change { subject.entry_station }.from(origin).to(nil)
-      end
-    end
-
-    end
   end
+   describe "please work" do
+     let(:card) { Oystercard.new }
+     it "should wipe station you entered in upon touching out" do
+       card.topup(10)
+       card.touch_in('hub')
+       expect { card.touch_out('buh') }.to change { card.entry_station }.from("hub").to(nil)
+     end
+     it " should record your travel history" do
+       card.topup(10)
+       card.touch_in('hub')
+       card.touch_out('buh')
+       expect(card.history[-1][:start]).to eq('hub')
+     end
+     it " should record your travel history" do
+       card.topup(10)
+       card.touch_in('hub')
+       card.touch_out('buh')
+       expect(card.history[-1][:finish]).to eq('buh')
+     end
+   end
 end

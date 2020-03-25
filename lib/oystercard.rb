@@ -8,9 +8,10 @@ class Oystercard
   def initialize
     @balance = STARTING_BALANCE
     @entry_station = nil
+    @history = []
   end
 
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :history
 
   def topup(amount)
     fail "Maximum balance £#{MAXIMUM_BALANCE}" if exceed_max?(amount)
@@ -28,11 +29,18 @@ class Oystercard
     @entry_station = origin
   end
 
-  def touch_out
+  def touch_out(final)
     deduct
+    journey_maker(final)
     @entry_station = nil
   end
 
+  def journey_maker(final)
+    journey = Hash.new
+    journey[:start] = @entry_station
+    journey[:finish] = final
+    @history.push(journey)
+  end
   def in_journey?
     @entry_station != nil
   end
