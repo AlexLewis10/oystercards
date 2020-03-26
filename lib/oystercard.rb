@@ -30,18 +30,19 @@ class Oystercard
     @entry_station = origin
   end
 
-  def touch_out(final)
+  def touch_out(final_station)
     deduct
-    journey_maker(final)
+    journey_maker(final_station)
     @entry_station = nil
   end
 
-  def journey_maker(final)
+  def journey_maker(final_station)
     journey = Hash.new
     journey[:start] = @entry_station
-    journey[:finish] = final
+    journey[:finish] = final_station
     @history.push(journey)
   end
+
   def in_journey?
     @entry_station != nil
   end

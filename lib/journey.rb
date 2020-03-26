@@ -1,12 +1,23 @@
 class Journey
-  attr_reader :starting_point
+  attr_reader :start_point
 
-  def initialize(starting_point)
-    @origin = starting_point
+  def initialize(start_point)
+    @start_point = start_point
+    @end_point = nil
   end
 
   def origin
-    @origin
+    @start_point
+  end
+
+  def journey_finish(end_point)
+    @end_point = end_point
+  end
+
+  def calculate
+  end
+
+  def complete
   end
 
 end
