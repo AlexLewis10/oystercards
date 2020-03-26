@@ -15,7 +15,11 @@ class Journey
   end
 
   def calculate
-    Oystercard::MINIMUM_FARE
+    if @end_point == nil || @start_point == nil
+      6
+    else
+      Oystercard::MINIMUM_FARE
+    end
   end
 
   def complete

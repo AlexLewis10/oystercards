@@ -32,6 +32,9 @@ class Oystercard
 
   def touch_out(final_station)
     deduct
+ #   if @current_journey = nil
+ #     @current_journey = Journey.new(nil)
+ #   end
     journey_maker(final_station)
   end
 

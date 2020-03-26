@@ -35,7 +35,20 @@ describe Journey do
   end
 
   it 'returns the minimum fare' do
+    journey = Journey.new('Bank')
+    journey.journey_finish('Kentish')
     expect(journey.calculate).to eq Oystercard::MINIMUM_FARE
+  end
+
+  it 'returns the penalty fare if user does not touch out' do
+    journey = Journey.new('Bank')
+    expect(journey.calculate).to eq 6
+  end
+
+  it 'returns the minimum fare' do
+    journey = Journey.new(nil)
+    journey.journey_finish('Kentish')
+    expect(journey.calculate).to eq 6
   end
 
 end
