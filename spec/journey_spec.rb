@@ -28,11 +28,11 @@ describe Journey do
     expect(journey.complete).to eq false
   end
 
-#  it 'confirms if the journey is complete' do
-#    journey = Journey.new
-
-#    expect(journey.complete).to eq true
-#  end
+  it 'confirms if the journey is complete' do
+    journey = Journey.new('Bank')
+    journey.journey_finish('Kentish')
+    expect(journey.complete).to eq true
+  end
 
 
 end
