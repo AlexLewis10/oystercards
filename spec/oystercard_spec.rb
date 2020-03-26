@@ -36,14 +36,7 @@ describe Oystercard do
     it 'will raise an error if there is not enough balance on the card' do
       expect { subject.touch_in("text string") }.to raise_error "Below minimum balance of £#{Oystercard::MINIMUM_BALANCE}"
     end
-
   end
-
-  xit 'when user touches in captures station of "text string"' do
-    subject.topup(10)
-    expect { subject.touch_in("text string") }.to change { subject.entry_station }.from(nil).to("text string")
-  end
-
 
   context '#in_journey' do
     it 'responds to touch_in' do
@@ -64,9 +57,6 @@ describe Oystercard do
         subject.touch_in("text string")
       end
 
-        xit 'it checks if the card in use after user touched in' do
-          expect(subject).to be_in_journey
-        end
         it 'it checks if the card not in use after user touched out' do
           subject.touch_out('buh')
           expect(subject).not_to be_in_journey
@@ -82,11 +72,6 @@ describe Oystercard do
   end
    describe "please work" do
      let(:card) { Oystercard.new }
-     xit "should wipe station you entered in upon touching out" do
-       card.topup(10)
-       card.touch_in('hub')
-       expect { card.touch_out('buh') }.to change { card.entry_station }.from("hub").to(nil)
-     end
      it " should record your travel history" do
        card.topup(10)
        card.touch_in('hub')
