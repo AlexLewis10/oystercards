@@ -27,20 +27,19 @@ class Oystercard
 
   def touch_in(origin)
     fail "Below minimum balance of £#{MINIMUM_BALANCE}" if @balance < MINIMUM_BALANCE
-    @entry_station = origin
+    @current_journey = Journey.new(origin)
   end
 
   def touch_out(final_station)
     deduct
     journey_maker(final_station)
-    @entry_station = nil
   end
 
   def journey_maker(final_station)
-    journey = Hash.new
-    journey[:start] = @entry_station
-    journey[:finish] = final_station
-    @history.push(journey)
+    journey_stations = Hash.new
+    journey_stations[:start] = @current_journey.origin
+    journey_stations[:finish] = @current_journey.journey_finish(final_station)
+    @history.push(journey_stations)
   end
 
   def in_journey?
