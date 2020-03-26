@@ -5,4 +5,8 @@ class Journey
     @origin = starting_point
   end
 
+  def origin
+    @origin
+  end
+
 end
