@@ -34,5 +34,8 @@ describe Journey do
     expect(journey.complete).to eq true
   end
 
+  it 'returns the minimum fare' do
+    expect(journey.calculate).to eq Oystercard::MINIMUM_FARE
+  end
 
 end

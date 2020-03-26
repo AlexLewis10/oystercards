@@ -15,6 +15,7 @@ class Journey
   end
 
   def calculate
+    Oystercard::MINIMUM_FARE
   end
 
   def complete
