@@ -18,6 +18,11 @@ class Journey
   end
 
   def complete
+    if @end_point == nil
+      false
+    else
+      true
+    end
   end
 
 end

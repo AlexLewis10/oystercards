@@ -21,4 +21,18 @@ describe Journey do
   it "responds to #complete" do
     expect(journey).to respond_to :complete
   end
+  
+  it 'confirms is the journey is not complete' do
+    journey = Journey.new('Bank')
+    journey.origin
+    expect(journey.complete).to eq false
+  end
+
+#  it 'confirms if the journey is complete' do
+#    journey = Journey.new
+
+#    expect(journey.complete).to eq true
+#  end
+
+
 end
