@@ -2,6 +2,7 @@ require 'journey'
 
 describe Journey do
   let(:journey) { Journey.new('Bank') }
+  let(:card) { Oystercard.new }
   it "should be able to tell us where the journey started" do
     expect(journey.start_point).to eq('Bank')
   end
@@ -41,13 +42,12 @@ describe Journey do
   end
 
   it 'returns the penalty fare if user does not touch out' do
-    journey = Journey.new('Bank')
-    expect(journey.calculate).to eq 6
+    expect(journey.calculate).to eq Oystercard::PENALTY_FARE
   end
 
-  it 'returns the minimum fare' do
+  it 'returns the penalty fare if user does not touch in' do
     journey = Journey.new(nil)
     journey.journey_finish('Kentish')
-    expect(journey.calculate).to eq 6
+    expect(journey.calculate).to eq Oystercard::PENALTY_FARE
   end
 end
