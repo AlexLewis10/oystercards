@@ -21,7 +21,7 @@ describe Journey do
   it "responds to #complete" do
     expect(journey).to respond_to :complete
   end
-  
+
   it 'confirms is the journey is not complete' do
     journey = Journey.new('Bank')
     journey.origin
@@ -50,5 +50,4 @@ describe Journey do
     journey.journey_finish('Kentish')
     expect(journey.calculate).to eq 6
   end
-
 end
